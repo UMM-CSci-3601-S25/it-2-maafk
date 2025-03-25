@@ -1,0 +1,76 @@
+// Flex container styling
+.flex-row {
+    display: flex;
+    justify-content: center; // Centers content horizontally
+    align-items: center; // Centers content vertically
+    min-height: 100vh; // Full viewport height
+    background-color: #f9f9f9; // Subtle light background
+    background-image: linear-gradient(to bottom, #eaeaea, #ffffff); // Smooth gradient
+    padding: 20px;
+  }
+  
+  // Form container styling
+  .flex-1 {
+    background-color: #ffffff; // Clean white background
+    border: 1px solid #ddd; // Subtle border
+    border-radius: 15px; // Rounded edges
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Soft shadow
+    width: 90%; // Responsive width
+    max-width: 600px; // Limits max width
+    padding: 20px;
+  }
+  
+  // Card styling
+  .host-setting-card {
+    margin: 20px 0;
+  }
+  
+  // Input field styling
+  .input-field {
+    width: 100%; // Full width for input
+    margin-bottom: 20px; // Space below the input
+  }
+  
+  // Submit button styling
+  button[data-test="confirmAddPromptButton"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3f51b5; // Primary color
+    color: #fff; // White text
+    border-radius: 8px; // Rounded edges
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); // Subtle shadow
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  
+    &:hover {
+      transform: scale(1.05); // Slight hover effect
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); // Enhanced shadow
+    }
+  }
+  
+  // Go-back button styling
+  .add-user-fab {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    background-color: #2226ff; // Accent color
+    color: #fff;
+  
+    &:hover {
+      background-color: #1a1fdd; // Darker accent on hover
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .flex-1 {
+      width: 95%; // Adjusts width for smaller screens
+    }
+  
+    .add-user-fab {
+      bottom: 20px; // Moves button closer to the bottom
+      right: 20px; // Adjusts position for smaller screens
+    }
+  }
+  
+  
