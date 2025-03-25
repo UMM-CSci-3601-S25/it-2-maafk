@@ -1,36 +1,30 @@
-<div class="flex-row">
-  <div class="flex-1">
-    <style>
-      mat-grid-tile {
-        height: 200px !important;
-      }
-    </style>
-    <mat-grid-list cols="3" rowHeight="1:1">
+<div class="page-container">
+  <div class="background-box">
+    <mat-grid-list cols="3" rowHeight="1:1" class="grid-container">
       <mat-grid-tile *ngFor="let prompt of prompts">
-        <div>
-          {{ prompt }}
+        <div class="card">
+          <div class="prompt-text">
+            {{ prompt }}
+          </div>
+          <mat-form-field appearance="fill" class="input-field">
+            <mat-label>Response</mat-label>
+            <input matInput placeholder="Enter your response">
+          </mat-form-field>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            data-test="confirmAddPromptButton"
+            class="submit-button"
+          >
+            Submit Prompt
+          </button>
         </div>
-        <mat-form-field appearance="fill">
-          <mat-label>Response</mat-label>
-          <input matInput placeholder="Enter your response">
-
-        </mat-form-field>
-
-        <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        data-test="confirmAddPromptButton"
-        >
-        Submit Prompt
-      </button>
-
       </mat-grid-tile>
-
     </mat-grid-list>
-
-    <button mat-fab class="add-user-fab" matTooltip="go back" matTooltipPosition="left" routerLink="" style="position: absolute; bottom: 50px; right: 50px;">
+    <button mat-fab class="add-user-fab" matTooltip="go back" matTooltipPosition="left" routerLink="">
       <mat-icon aria-label="go back">subdirectory_arrow_left</mat-icon>
     </button>
   </div>
 </div>
+
