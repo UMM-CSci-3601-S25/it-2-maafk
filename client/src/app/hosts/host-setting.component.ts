@@ -22,7 +22,7 @@ import { GameService } from '../game/game.service';
   templateUrl: './host.component.html',
   styleUrl: './host.component.scss'
 })
-export class HostSettingsComponent {
+export class HostComponent {
 
   addGameForm = new FormGroup({
     // We allow alphanumeric input and limit the length for name.
@@ -79,7 +79,6 @@ export class HostSettingsComponent {
   }
 
   submitForm() {
-
     this.gameService.addGame({joincode: this.addGameForm.value.joincode, players: [`${this.addGameForm.value.playerName}`], currentRound: 0, prompts: }).subscribe({
       next: (newId) => {
         this.snackBar.open(
