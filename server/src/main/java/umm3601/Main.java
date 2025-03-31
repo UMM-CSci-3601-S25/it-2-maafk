@@ -6,7 +6,6 @@ import com.mongodb.client.MongoDatabase;
 import umm3601.game.GameController;
 import umm3601.prompt.PromptController;
 import umm3601.response.ResponseController;
-import umm3601.user.UserController;
 import umm3601.player.PlayerController;
 
 public class Main {
@@ -30,7 +29,6 @@ public class Main {
 
   static Controller[] getControllers(MongoDatabase database) {
     Controller[] controllers = new Controller[] {
-      new UserController(database),
       new PromptController(database),
       new ResponseController(database),
       new PlayerController(database),
