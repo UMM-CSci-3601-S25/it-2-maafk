@@ -2,117 +2,119 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatListModule } from '@angular/material/list';
-import { RouterLink } from '@angular/router';
-import { HostService } from './host.service';
+import { GameService } from '../game/game.service';
+
 @Component({
-  selector: 'app-host-settings',
-  templateUrl: './host-setting.component.html',
-  styleUrls: ['./host-setting.component.scss'],
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatOptionModule,
-    MatIcon,
-    MatSliderModule,
-    MatListModule,
-    RouterLink,
-
-  ]
+  selector: 'app-host',
+  imports:
+    [
+      FormsModule,
+      ReactiveFormsModule,
+      MatCardModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule
+    ],
+  templateUrl: './host.component.html',
+  styleUrl: './host.component.scss'
 })
-export class HostSettingsComponent {
+export class HostComponent {
 
-
-
-  // Define a signal to hold the host prompt, initially undefined
-  //hostPrompt = signal<string | undefined>(undefined);
-
-
-  // Define a form group for adding a prompt with validation rules
-  addPromptForm = new FormGroup({
-    text: new FormControl('', Validators.compose([
-      Validators.required, // Prompt is required
-      Validators.minLength(2), // Minimum length of 3 characters
-      Validators.maxLength(200) // Maximum length of 200 characters
-    ]))
+  addGameForm = new FormGroup({
+    // We allow alphanumeric input and limit the length for name.
+    joincode: new FormControl('', Validators.compose([
+      Validators.required,
+      Validators.minLength(2),
+      // Long join codes are very inconvenient
+      Validators.maxLength(10),
+    ])),
+    playerName: new FormControl('', Validators.compose([
+      Validators.required,
+      Validators.minLength(2),
+      // length of the player name must be 2-100 characters
+      Validators.maxLength(100),
+    ])),
   });
 
-
-
-  // Define validation messages for the prompt form control
-  readonly addPromptValidationMessages = {
+  readonly addGameValidationMessages = {
+    joincode: [
+      {type: 'required', message: 'Join code is required'},
+      {type: 'minlength', message: 'Name must be at least 2 characters long'},
+      {type: 'maxlength', message: 'Name cannot be more than 10 characters long'},
+    ],
+    playerName: [
+      {type: 'required', message: 'Player name is required'},
+      {type: 'minlength', message: 'Name must be at least 2 characters long'},
+      {type: 'maxlength', message: 'Name cannot be more than 100 characters long'},
+    ],
     text: [
       { type: 'required', message: 'Prompt text is required' },
       { type: 'minlength', message: 'Prompt must be at least 2 characters'},
       { type: 'maxlength', message: 'Prompt text cannot be more than 200 characters long' }
-    ]
+    ],
   };
 
-
-
-  // Inject dependencies: MatSnackBar for displaying messages and Router for navigation
   constructor(
-    private hostService: HostService,
+    private gameService: GameService,
     private snackBar: MatSnackBar,
     private router: Router) {
   }
 
-
-
-  // Check if a form control has an error and has been touched or is dirty
   formControlHasError(controlName: string): boolean {
-    return this.addPromptForm.get(controlName).invalid &&
-      (this.addPromptForm.get(controlName).dirty || this.addPromptForm.get(controlName).touched);
+    return this.addGameForm.get(controlName).invalid &&
+      (this.addGameForm.get(controlName).dirty || this.addGameForm.get(controlName).touched);
   }
 
-
-
-
-  // Get the error message for a specific form control based on validation rules
-  getErrorMessage(controlName: keyof typeof this.addPromptValidationMessages): string {
-    for (const { type, message } of this.addPromptValidationMessages[controlName]) {
-      if (this.addPromptForm.get(controlName).hasError(type)) {
+  getErrorMessage(name: keyof typeof this.addGameValidationMessages): string {
+    for(const {type, message} of this.addGameValidationMessages[name]) {
+      if (this.addGameForm.get(name).hasError(type)) {
         return message;
       }
     }
     return 'Unknown error';
   }
 
-
-  // Handle form submission
-  submitPrompt() {
-    console.log(this.addPromptForm.value);
-    this.hostService.addPrompt(this.addPromptForm.value).subscribe({
+  submitForm() {
+    // Make a new game with the host as the only initial player using the joincode the host chose
+    // And, since we are using the id for the game, the joincode is probably not needed, but I (KK)
+    // made joincode required in several places and haven't removed it yet (might still be useful
+    // for something since it's much easier to recognize than the id). I initially also sent a
+    // websocket message from here and I don't think we need to since this will be the first person
+    // joining and the game will be brand new (this is almost like the join page, but without websocket stuff)
+    this.gameService.addGame({joincode: this.addGameForm.value.joincode, players: [`${this.addGameForm.value.playerName}`], currentRound: 0}).subscribe({
       next: (newId) => {
         this.snackBar.open(
-          `Prompt added with ID: ${newId} and text: ${this.addPromptForm.value.text}`,
+          `Added game with join code: ${this.addGameForm.value.joincode}`,
           null,
           { duration: 2000 }
         );
-        this.router.navigate(['/prompts/']);
+        this.router.navigate(['/games/', newId]);
       },
-
-      error: error => {
-        this.snackBar.open(
-          `Error adding prompt: ${error.message}`,
-          'OK',
-          { duration: 5000 }
-        );
+      error: err => {
+        if (err.status === 400) {
+          this.snackBar.open(
+            `Tried to add and host an illegal new game – Error Code: ${err.status}\nMessage: ${err.message}`,
+            'OK',
+            { duration: 5000 }
+          );
+        } else if (err.status === 500) {
+          this.snackBar.open(
+            `The server failed to process your request to add a new game to host. Is the server up? – Error Code: ${err.status}\nMessage: ${err.message}`,
+            'OK',
+            { duration: 5000 }
+          );
+        } else {
+          this.snackBar.open(
+            `An unexpected error occurred – Error Code: ${err.status}\nMessage: ${err.message}`,
+            'OK',
+            { duration: 5000 }
+          );
+        }
       },
-
-
     });
   }
-
 }
