@@ -22,7 +22,7 @@ import { GameService } from '../game/game.service';
   templateUrl: './host.component.html',
   styleUrl: './host.component.scss'
 })
-export class HostComponent {
+export class HostSettingsComponent {
 
   addGameForm = new FormGroup({
     // We allow alphanumeric input and limit the length for name.
@@ -79,13 +79,8 @@ export class HostComponent {
   }
 
   submitForm() {
-    // Make a new game with the host as the only initial player using the joincode the host chose
-    // And, since we are using the id for the game, the joincode is probably not needed, but I (KK)
-    // made joincode required in several places and haven't removed it yet (might still be useful
-    // for something since it's much easier to recognize than the id). I initially also sent a
-    // websocket message from here and I don't think we need to since this will be the first person
-    // joining and the game will be brand new (this is almost like the join page, but without websocket stuff)
-    this.gameService.addGame({joincode: this.addGameForm.value.joincode, players: [`${this.addGameForm.value.playerName}`], currentRound: 0}).subscribe({
+
+    this.gameService.addGame({joincode: this.addGameForm.value.joincode, players: [`${this.addGameForm.value.playerName}`], currentRound: 0, prompts: }).subscribe({
       next: (newId) => {
         this.snackBar.open(
           `Added game with join code: ${this.addGameForm.value.joincode}`,
