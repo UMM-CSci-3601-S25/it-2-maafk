@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
@@ -14,6 +14,11 @@ import { HostService } from '../hosts/host.service';
 import { Prompt } from '../hosts/prompt';
 import { NgFor } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ActivatedRoute } from '@angular/router';
+import { GameService } from './game.service';
+import { WebSocketService } from './web-socket.service';
+import { MatListModule } from '@angular/material/list';
+import { Game } from './game';
 
 
 
@@ -33,12 +38,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatInputModule,
     NgFor,
     MatFormFieldModule,
-    RouterLink
+    RouterLink,
+    MatListModule
   ]
 })
 
 export class GameComponent implements OnInit {
 
+  webSocketService = inject(WebSocketService);
+  gameService = inject(GameService);
+  route = inject(ActivatedRoute);
+  game = signal<Game | null>(null);
+  gameId: string = this.route.snapshot.params['id'];
+  players: { name: string, score: number }[] = [];
+  questionPrompt: string = '';
+  answer: string = '';
+
+  error = signal({ help: '', httpResponse: '', message: '' });
 
   readonly hostUrl: string = `${environment.apiUrl}prompts`;
   prompts: string[] = [];
@@ -66,9 +82,5 @@ export class GameComponent implements OnInit {
   addResponse(newResponse: Partial<Response>): Observable<string> {
     return this.httpClient.post<{id: string}>(this.hostUrl, newResponse).pipe(map(response => response.id));
   }
-
-
-
-
 }
 

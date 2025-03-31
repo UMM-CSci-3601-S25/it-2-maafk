@@ -6,4 +6,6 @@ export interface Game {
   responses: string[];
   players: string[];
   scores: number[];
+  _id: string;
+  joincode: string;
 }
