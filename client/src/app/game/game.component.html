@@ -1,30 +1,54 @@
-<div class="page-container">
-  <div class="background-box">
-    <mat-grid-list cols="3" rowHeight="1:1" class="grid-container">
-      <mat-grid-tile *ngFor="let prompt of prompts">
-        <div class="card">
-          <div class="prompt-text">
-            {{ prompt }}
-          </div>
-          <mat-form-field appearance="fill" class="input-field">
-            <mat-label>Response</mat-label>
-            <input matInput placeholder="Enter your response">
-          </mat-form-field>
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-            data-test="confirmAddPromptButton"
-            class="submit-button"
-          >
-            Submit Prompt
-          </button>
-        </div>
-      </mat-grid-tile>
-    </mat-grid-list>
-    <button mat-fab class="add-user-fab" matTooltip="go back" matTooltipPosition="left" routerLink="">
-      <mat-icon aria-label="go back">subdirectory_arrow_left</mat-icon>
-    </button>
+@if (game()) {
+  <p>{{ game().joincode }}</p>
+  <p>{{ game()._id }} </p>
+  @if (game().players) {
+    <mat-list data-test="player-list">
+    @for (player of game().players; track player; let i = $index) {
+      <mat-list-item data-test="player">{{ i }} {{ player }}</mat-list-item>
+    }
+    </mat-list>
+  }
+}
+
+<div class="flex-container">
+  <div class="flex-row">
+    <div class="flex-1">
+      <div class="players-list">
+        <h3>Players</h3>
+        <ul>
+          <li *ngFor="let player of players">{{ player.name }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex-1">
+      <div class="question-prompt">
+        <h3>Question Prompt</h3>
+        <p>  {{ prompts }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="flex-row">
+    <div class="flex-1">
+      <div class="score-system">
+        <h3>Scores</h3>
+        <ul>
+          <li *ngFor="let player of players">{{ player.name }}: {{ player.score }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex-1">
+      <div class="answer-box">
+        <mat-form-field appearance="fill">
+          <mat-label>Response</mat-label>
+          <input matInput placeholder="Enter your response">
+
+        </mat-form-field>
+        <h3>Answer</h3>
+      </div>
+    </div>
   </div>
 </div>
+
+
 
