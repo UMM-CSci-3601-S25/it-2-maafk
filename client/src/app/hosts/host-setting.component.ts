@@ -19,10 +19,10 @@ import { GameService } from '../game/game.service';
       MatInputModule,
       MatButtonModule
     ],
-  templateUrl: './host.component.html',
-  styleUrl: './host.component.scss'
+  templateUrl: './host-setting.component.html',
+  styleUrl: './host-setting.component.scss'
 })
-export class HostComponent {
+export class HostSettingsComponent {
 
   addGameForm = new FormGroup({
     // We allow alphanumeric input and limit the length for name.
@@ -33,6 +33,12 @@ export class HostComponent {
       Validators.maxLength(10),
     ])),
     playerName: new FormControl('', Validators.compose([
+      Validators.required,
+      Validators.minLength(2),
+      // length of the player name must be 2-100 characters
+      Validators.maxLength(100),
+    ])),
+    prompt: new FormControl('', Validators.compose([
       Validators.required,
       Validators.minLength(2),
       // length of the player name must be 2-100 characters
@@ -79,7 +85,7 @@ export class HostComponent {
   }
 
   submitForm() {
-    this.gameService.addGame({joincode: this.addGameForm.value.joincode, players: [`${this.addGameForm.value.playerName}`], currentRound: 0, prompts: }).subscribe({
+    this.gameService.addGame({joincode: this.addGameForm.value.joincode, players: [`${this.addGameForm.value.playerName}`], currentRound: 0, prompts: [`${this.addGameForm.value.prompt}`]}).subscribe({
       next: (newId) => {
         this.snackBar.open(
           `Added game with join code: ${this.addGameForm.value.joincode}`,

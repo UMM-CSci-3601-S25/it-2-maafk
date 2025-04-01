@@ -1,6 +1,6 @@
 <div class="flex-row">
   <div class="flex-1">
-    <form [formGroup]="addPromptForm" (ngSubmit)="submitPrompt();">
+    <form [formGroup]="addGameForm" (ngSubmit)="submitForm();">
       <!-- add slider to determine how many rounds there are -->
       <mat-card class="host-setting-card">
         <mat-card-content>
@@ -8,6 +8,17 @@
             <mat-label>Number Of Rounds</mat-label>
             <input matInput data-test="NumberRoundInput" type="number" placeholder="Number of Rounds"
             min="0" max="20">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label for="playerName">Player/Host Name</mat-label>
+            <input matInput type="text"
+              formControlName="playerName" #message placeholder="name of host" required>
+            @if (formControlHasError('playerName')) {
+              <mat-error data-test="playerNameError">
+                {{getErrorMessage('playerName')}}
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
@@ -20,24 +31,33 @@
             }
           </mat-form-field>
 
-          <button
-            mat-raised-button
-            color="primary"
-            [disabled]="!addPromptForm.valid"
-            type="submit"
-            data-test="confirmAddPromptButton"
-            >
-            Submit Prompt
-          </button>
+          <mat-form-field>
+            <mat-label for="joincode">Join Code</mat-label>
+            <input matInput type="text"
+              formControlName="joincode" #message placeholder="create join code" required>
+            @if (formControlHasError('joincode')) {
+              <mat-error data-test="joincodeError">
+                {{getErrorMessage('joincode')}} 
+              </mat-error>
+            }
+          </mat-form-field>
+
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        [disabled]="!addGameForm.valid"
+        type="submit"
+        data-test="confirmJoinAsHostButton"
+        >
+        JOIN AS HOST
+        </button>
         </mat-card-content>
       </mat-card>
-
-
 
     <!-- button that takes user back to host website -->
 
     <button mat-fab class="add-user-fab" matTooltip="go back" matTooltipPosition="left" routerLink="/host" style="position: absolute; bottom: 50px; right: 50px;">
-      <mat-icon aria-label="go back">subdirectory_arrow_left</mat-icon>
     </button>
     </form>
   </div>
