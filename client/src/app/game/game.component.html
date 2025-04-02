@@ -1,36 +1,81 @@
-<div class="flex-row">
-  <div class="flex-1">
-    <style>
-      mat-grid-tile {
-        height: 200px !important;
-      }
-    </style>
-    <mat-grid-list cols="3" rowHeight="1:1">
-      <mat-grid-tile *ngFor="let prompt of prompts">
-        <div>
-          {{ prompt }}
-        </div>
-        <mat-form-field appearance="fill">
-          <mat-label>Response</mat-label>
-          <input matInput placeholder="Enter your response">
-
-        </mat-form-field>
-
-        <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        data-test="confirmAddPromptButton"
-        >
-        Submit Prompt
-      </button>
-
-      </mat-grid-tile>
-
-    </mat-grid-list>
-
-    <button mat-fab class="add-user-fab" matTooltip="go back" matTooltipPosition="left" routerLink="" style="position: absolute; bottom: 50px; right: 50px;">
-      <mat-icon aria-label="go back">subdirectory_arrow_left</mat-icon>
-    </button>
+<div class="game-container">
+  <!-- Game Header -->
+  <div class="game-header">
+    <h1>Cards Against Humanity</h1>
+    <div class="game-info">
+      <span>Room: {{ gameId }}</span>
+      <span>First to {{ targetScore }} points wins!</span>
+    </div>
   </div>
+
+  <!-- Player List -->
+  <mat-card class="player-card">
+    <mat-card-title>Players</mat-card-title>
+    <mat-list>
+      <mat-list-item *ngFor="let player of players">
+        <span [class.czar]="player.isCzar">
+          {{ player.name }} - {{ player.score }} points
+          <mat-icon *ngIf="player.isCzar">star</mat-icon>
+        </span>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+
+  <!-- Current Prompt -->
+  <mat-card class="prompt-card">
+    <mat-card-content>
+      <p>{{ currentPrompt }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Submission Area -->
+  <mat-card *ngIf="!isCzar && !hasSubmitted" class="response-card">
+    <mat-card-content>
+      <mat-form-field appearance="fill" class="response-field">
+        <mat-label>Your response</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="playerResponse"
+          rows="3"
+        ></textarea>
+      </mat-form-field>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="submitResponse()"
+        [disabled]="!playerResponse.trim()"
+      >
+        Submit
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Waiting State -->
+  <div *ngIf="hasSubmitted && !isCzar" class="waiting-message">
+    <mat-progress-spinner 
+      mode="indeterminate" 
+      diameter="40"
+      color="primary">
+    </mat-progress-spinner>
+    <p>Waiting for other players...</p>
+  </div>
+
+  <!-- Czar View -->
+  <div *ngIf="isCzar && submissions.length > 0" class="czar-view">
+    <h2>Select the winning response:</h2>
+    <mat-list>
+      <mat-list-item *ngFor="let response of submissions; let i = index">
+        <p>{{ response }}</p>
+        <button mat-icon-button (click)="selectWinner(i)">
+          <mat-icon>check_circle</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <!-- Back Button -->
+  <button mat-fab class="back-button" routerLink="/">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 </div>
+

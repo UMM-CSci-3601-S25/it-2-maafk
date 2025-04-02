@@ -1,74 +1,91 @@
 import { Component, OnInit } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
-import { environment } from '../../environments/environment';
-import { MatGridListModule} from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Response } from './response';
-import { map } from 'rxjs/operators';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HostService } from '../hosts/host.service';
 import { Prompt } from '../hosts/prompt';
-import { NgFor } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-
-
-
-
 
 @Component({
-  selector: 'app-game-component',
-  templateUrl: 'game.component.html',
+  selector: 'app-game',
+  standalone: true,
+  templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
-  providers: [],
   imports: [
-    MatCardModule,
+    CommonModule,
+    FormsModule,
     MatButtonModule,
-    MatGridListModule,
-    MatIconModule,
-    MatGridListModule,
-    MatInputModule,
-    NgFor,
+    MatCardModule,
     MatFormFieldModule,
-    RouterLink
+    MatInputModule,
+    MatIconModule,
+    MatListModule,
+    MatProgressSpinnerModule // <-- Added this for mat-spinner
   ]
 })
-
 export class GameComponent implements OnInit {
+  // Game state
+  gameId: string = this.generateRandomId(6);
+  currentPrompt: string = 'Loading prompt...';
+  targetScore: number = 5;
+  isCzar: boolean = false;
+  hasSubmitted: boolean = false;
+  playerResponse: string = '';
 
+  // Players and responses
+  players = [
+    { id: '1', name: 'You', score: 0, isCzar: false },
+    { id: '2', name: 'Player 2', score: 0, isCzar: true }
+  ];
+  submissions: string[] = [];
 
-  readonly hostUrl: string = `${environment.apiUrl}prompts`;
-  prompts: string[] = [];
+  constructor(private hostService: HostService) {}
 
-  constructor(private hostService: HostService , private httpClient: HttpClient) {
-  }
   ngOnInit(): void {
-    this.hostService.getPrompts().subscribe((data: Prompt[]) => {
-      this.prompts = data.map(prompt => prompt.text); // Adjust according to your prompt structure
+    this.loadPrompt();
+  }
+
+  loadPrompt(): void {
+    this.hostService.getPrompts().subscribe({
+      next: (prompts: Prompt[]) => {
+        this.currentPrompt = prompts[0]?.text || 'No prompts available';
+      },
+      error: (err) => {
+        console.error('Failed to load prompts:', err);
+        this.currentPrompt = 'Error loading prompt';
+      }
     });
   }
-  generateRandomID(length: number): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
+
+  submitResponse(): void {
+    if (!this.playerResponse.trim()) return;
+    
+    this.submissions.push(this.playerResponse);
+    this.hasSubmitted = true;
+    
+    // In real app: Send to server via WebSocket
+    // this.socketService.submitResponse(this.gameId, this.playerResponse);
   }
 
-  getResponse(): Observable<Response[]> {
-    return this.httpClient.get<Response[]>(this.hostUrl);
+  selectWinner(index: number): void {
+    // In real app: Send selection to server
+    // this.socketService.selectWinner(this.gameId, index);
+    
+    // Reset for next round
+    this.hasSubmitted = false;
+    this.playerResponse = '';
+    this.submissions = [];
+    this.loadPrompt();
   }
 
-  addResponse(newResponse: Partial<Response>): Observable<string> {
-    return this.httpClient.post<{id: string}>(this.hostUrl, newResponse).pipe(map(response => response.id));
+  private generateRandomId(length: number): string {
+    return Array.from({ length }, () => 
+      Math.random().toString(36)[2] || '0'
+    ).join('');
   }
-
-
-
-
 }
-
