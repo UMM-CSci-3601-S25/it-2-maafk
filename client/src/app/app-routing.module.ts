@@ -9,6 +9,7 @@ import { HostComponent } from './hosts/host-list.component';
 import { AddPlayerComponent } from './players/player-list.component';
 import { HostSettingsComponent } from './hosts/host-setting.component';
 import { GameComponent } from './game/game.component';
+import { FormsModule } from '@angular/forms';
 
 
 // Note that the 'users/new' route needs to come before 'users/:id'.

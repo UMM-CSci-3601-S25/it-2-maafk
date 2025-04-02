@@ -1,7 +1,7 @@
 <div class="game-container">
   <!-- Game Header -->
   <div class="game-header">
-    <h1>Cards Against Humanity</h1>
+    <h1>Cards Against Apples</h1>
     <div class="game-info">
       <span>Room: {{ gameId }}</span>
       <span>First to {{ targetScore }} points wins!</span>
@@ -15,7 +15,7 @@
       <mat-list-item *ngFor="let player of players">
         <span [class.czar]="player.isCzar">
           {{ player.name }} - {{ player.score }} points
-          <mat-icon *ngIf="player.isCzar">star</mat-icon>
+          <mat-icon *ngIf="player.isCzar"></mat-icon>
         </span>
       </mat-list-item>
     </mat-list>
