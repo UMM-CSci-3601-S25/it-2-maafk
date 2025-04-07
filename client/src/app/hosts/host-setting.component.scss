@@ -1,0 +1,90 @@
+// // Host Setting Container Styling
+// .host-setting-container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     min-height: 100vh;
+//     background: none; // No page-wide background applied
+//   }
+  
+//   // Background Box Styling
+//   .background-box {
+//     background-color: #ffffff; // White background for the box
+//     width: 70%;
+//     max-width: 800px; // Prevents the box from being too large
+//     border: 1px solid #ccc;
+//     border-radius: 15px;
+//     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+//     padding: 30px;
+//     display: flex;
+//     flex-direction: column; // Ensures the form content stacks vertically
+//     align-items: center;
+//   }
+  
+//   // Card Styling (Inside the Background Box)
+//   .host-setting-card {
+//     background-color: #ffffff;
+//     width: 100%; // Full width inside the container
+//     border: 1px solid #ccc;
+//     border-radius: 10px;
+//     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+//     padding: 20px;
+//     transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+//     &:hover {
+//       transform: scale(1.02);
+//       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+//     }
+//   }
+  
+//   // Form Field Styling (Stacked)
+//   .input-field,
+//   .example-full-width {
+//     display: block; // Stack the input fields vertically
+//     width: 100%; // Full width to align with the card
+//     margin: 20px 0;
+  
+//     input {
+//       color: #000; // Ensure input text and placeholder color is black
+//       &::placeholder {
+//         color: #000; // Placeholder text color is black
+//       }
+//     }
+//   }
+  
+//   .input-field mat-label,
+//   .example-full-width mat-label {
+//     font-size: 18px;
+//     color: #5a87c9; // Label color for added aesthetics
+//   }
+  
+//   // Submit Button Styling
+//   .submit-button {
+//     color: #fff;
+//     background-color: #007bff; // Blue color for the button
+//     border-radius: 5px;
+//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//     width: 200px;
+//     height: 50px;
+//     font-size: 16px;
+//     font-weight: bold;
+//     transition: transform 0.2s, box-shadow 0.2s ease;
+  
+//     &:hover {
+//       transform: scale(1.1);
+//       box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+//     }
+//   }
+  
+//   // Floating Button Styling
+//   .add-user-fab {
+//     background-color: #5a87c9;
+//     color: #fff;
+//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  
+//     &:hover {
+//       background-color: #4578b2;
+//       box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+//     }
+//   }
+  

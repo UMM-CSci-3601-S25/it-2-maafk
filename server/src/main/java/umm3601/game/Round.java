@@ -1,21 +1,25 @@
+package umm3601.game;
 
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
 @SuppressWarnings({"VisibilityModifier"})
-public class Prompt {
+public class Round {
+
   @ObjectId @Id
   @SuppressWarnings({"MemberName"})
   public String _id;
 
-  public String text;
+  public String[] players;
+  public String judge;
+  public String prompt;
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof Prompt)) {
+    if (!(obj instanceof Round)) {
       return false;
     }
-    Prompt other = (Prompt) obj;
+    Round other = (Round) obj;
     return _id.equals(other._id);
   }
 
@@ -26,6 +30,6 @@ public class Prompt {
 
   @Override
   public String toString() {
-    return text;
+    return "A round with judge: " + judge + ", and " + players.toString();
   }
 }

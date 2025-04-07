@@ -1,0 +1,121 @@
+<div class="game-container">
+  <div class="game-header">
+    <h1>Cards Against Humanity</h1>
+    <div class="game-info">
+      <span>Room: {{ gameId }}</span>
+      <span>First to {{ targetScore }} points wins!</span>
+      <span>Round: {{ currentRound }}</span>
+    </div>
+  </div>
+  <div class="game-content">
+
+    <!-- Player List -->
+    <mat-card class="player-card">
+      <mat-card-title>Players</mat-card-title>
+      <mat-list>
+        <mat-list-item *ngFor="let player of players">
+          <span [class.czar]="player.isCzar">
+            <mat-icon *ngIf="player.isCzar">star</mat-icon>
+            {{ player.name }} - {{ player.score }} points
+          </span>
+        </mat-list-item>  
+      </mat-list>
+    </mat-card>
+
+    <!-- Prompt Display Area -->
+    <mat-card class="prompt-section">
+      <mat-card-header>
+        <mat-card-title>Current Prompt</mat-card-title>
+        <mat-card-subtitle>Fill in the blank</mat-card-subtitle>
+      <mat-card-content>
+      </mat-card-header>
+          <p class="prompt-text">{{ currentPrompt }}</p>
+        <div class="prompt-display">
+          <div *ngIf="isCzar && submissions.length > 0" class="submission-count">
+            {{ submissions.length }} / {{ players.length - 1 }} responses received
+          </div>
+      </mat-card-content>
+        </div>
+    </mat-card>
+
+    <!-- Submission Area -->
+    <mat-card *ngIf="!isCzar && !hasSubmitted" class="response-card">
+      <mat-card-content>
+        <mat-form-field appearance="fill" class="response-field">
+          <mat-label>Your response</mat-label>
+          <textarea
+            matInput
+            rows="3"
+            [(ngModel)]="playerResponse"
+            placeholder="Enter your funniest answer..."
+          ></textarea>
+        <button 
+        </mat-form-field>
+          mat-raised-button 
+          color="primary" 
+          (click)="submitResponse()"
+          [disabled]="!playerResponse.trim()"
+        >
+        </button>
+          Submit Response
+      </mat-card-content>
+    </mat-card>
+
+      <mat-card>
+    <div *ngIf="hasSubmitted && !isCzar" class="waiting-message">
+          <div class="submission-confirmation">
+        <mat-card-content>
+            <mat-icon class="check-icon">check_circle</mat-icon>
+            <h3>Your response has been submitted!</h3>
+            <p>"{{ playerResponse }}"</p>
+            <mat-progress-spinner 
+              mode="indeterminate" 
+              diameter="40"
+            </mat-progress-spinner>
+              color="primary">
+            <p>Waiting for other players... ({{ submissions.length }}/{{ players.length - 1 }})</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    
+    <!-- Waiting State -->
+      <mat-progress-spinner 
+    <div *ngIf="hasSubmitted && !isCzar" class="waiting-message">
+        diameter="40"
+        mode="indeterminate" 
+        color="primary">
+      </mat-progress-spinner>
+      <p>Current responses: {{ submissions.length }}</p>
+      <p>Waiting for other players to submit...</p>
+
+    </div>
+    <div *ngIf="isCzar && submissions.length > 0" class="czar-view">
+    <!-- Czar View -->
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Select the winning response</mat-card-title>
+          <mat-card-subtitle>Click the checkmark to choose</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list class="response-list">
+              <div class="response-content">
+            <mat-list-item *ngFor="let response of submissions; let i = index" class="response-item">
+                <button mat-icon-button (click)="selectWinner(i)" matTooltip="Select as winner">
+                <p>"{{ response }}"</p>
+                  <mat-icon color="primary">check_circle</mat-icon>
+                </button>
+              </div>
+          </mat-list>
+            </mat-list-item>
+    </div>
+      </mat-card>
+        </mat-card-content>
+  </div>
+
+  <button mat-fab class="back-button" routerLink="/" matTooltip="Return to lobby">
+  <!-- Back Button -->
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>

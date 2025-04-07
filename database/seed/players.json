@@ -1,26 +1,5 @@
 [
  {
-      "_id": {
-        "$oid": "58af3a600343927e48e8720f"
-      },
-      "name": "Hiona Fussen"
-    },
-    {
-      "_id": {
-        "$oid": "58af3a600343927e48e87210"
-      },
-      "name": "Bustin Jieber"
-    },
-    {
-      "_id": {
-        "$oid": "58af3a600343927e48e87211"
-      },
-      "name": "Joe Budden"
-    },
-    {
-      "_id": {
-        "$oid": "58af3a600343927e48e87212"
-      },
-      "name": "Hairder Merchant"
-    }
+    
+ }
 ]

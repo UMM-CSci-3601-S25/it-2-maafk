@@ -1,0 +1,57 @@
+<form [formGroup]="addGameForm" (ngSubmit)="submitForm();">
+  <mat-card class="add-user-card">
+    <mat-card-header>
+      <mat-card-title class="add-game-title">Host a new game</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="flex-col">
+
+        <mat-form-field>
+          <mat-label for="joincode">Join Code</mat-label>
+          <input matInput type="text"
+            formControlName="joincode" required>
+          @if (formControlHasError('joincode')) {
+            <mat-error data-test="joincodeError">
+              {{getErrorMessage('joincode')}}
+            </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="playerName">Player/Host Name</mat-label>
+          <input matInput type="text"
+            formControlName="playerName" required>
+          @if (formControlHasError('playerName')) {
+            <mat-error data-test="playerNameError">
+              {{getErrorMessage('playerName')}}
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>First Prompt</mat-label>
+          <textarea matInput formControlName="prompt" rows="3"></textarea>
+          <mat-error *ngIf="formControlHasError('prompt')">
+            {{ getErrorMessage('prompt') }}
+          </mat-error>
+        </mat-form-field>
+        
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        [disabled]="!addGameForm.valid"
+        type="submit"
+        data-test="confirmJoinAsHostButton"
+        >
+        JOIN AS HOST
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+
+

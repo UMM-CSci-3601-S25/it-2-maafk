@@ -1,0 +1,40 @@
+<div class="host-container">
+    <div class="host-header">
+      <h1>Host Control Panel</h1>
+      <div class="host-info">
+        <span>Room: {{ gameId }}</span>
+        <span>Round: {{ currentRound }}</span>
+      </div>
+    </div>
+  
+    <!-- Current Prompt -->
+    <mat-card class="prompt-section">
+      <mat-card-header>
+        <mat-card-title>Current Prompt</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="prompt-text">{{ currentPrompt }}</p>
+      </mat-card-content>
+    </mat-card>
+  
+    <!-- All Submissions -->
+    <mat-card class="submissions-section" *ngIf="submissions.length > 0">
+      <mat-card-header>
+        <mat-card-title>Player Submissions</mat-card-title>
+        <mat-card-subtitle>Select the best answer</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let submission of submissions; let i = index">
+            <div class="submission-item">
+              <p>"{{ submission.text }}" - <i>{{ submission.player }}</i></p>
+              <button mat-icon-button (click)="selectHostWinner(i)" matTooltip="Select as winner">
+                <mat-icon color="primary">check_circle</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
