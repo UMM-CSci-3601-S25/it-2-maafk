@@ -1,107 +1,65 @@
-/* Overall Home Page Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* Pure white background */
+}
+
 .flex-row {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
-  background: #f2f2f2;
-  padding: 20px;
+  height: 100vh;
+  width: 100vw; /* Full width */
 }
 
-.flex-1 {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+/* Centered, larger title card */
 .home-card {
   width: 90%;
-  max-width: 600px;
+  max-width: 900px;
   background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.game-card-header {
-  background-color: #333;
-  color: #fff;
-  padding: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   text-align: center;
+  display: flex;
+
+  align-items: center;
+  justify-content: center; /* Keeps everything centered */
+  padding: 50px; /* More space */
 }
 
+/* Title Styling with Strong Shadow */
 .game-title {
-  font-size: 2.5rem;
+  font-size: 3.5rem; /* Increased font size */
   font-weight: bold;
   text-transform: uppercase;
   font-family: 'Roboto', sans-serif;
   letter-spacing: 2px;
+  color: #0000ff; /* Consistent blue */
+  text-shadow: 5px 5px 12px rgba(0, 0, 0, 0.4); /* Stronger shadow effect */
 }
 
-.game-card-content {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
+/* Button Container - Centered & Side-by-Side */
 .button-container {
-  width: 100%;
-  text-align: center;
-}
-
-/* Button Styles */
-.game-button {
-  width: 100%;
-  height: 50px;
-  font-size: 1.2rem;
-  padding: 12px;
-  text-transform: uppercase;
-  border-radius: 8px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-  margin-bottom: 20px;
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Centers buttons */
   align-items: center;
+  gap: 25px; /* Space between buttons */
+  width: 100%;
 }
 
-.game-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
-}
-
-.game-button:active {
-  transform: scale(0.98);
-}
-
-/* Host Button Customization */
-.host-button {
-  background-color: #ff5252;
-  color: rgb(0, 0, 0);
-}
-
-.host-button .button-text {
-  font-weight: 600;
-}
-
-/* Join Button Customization */
-.join-button {
-  background-color: #3f51b5;
+/* Button Styling - Same Color */
+.host-button, .join-button {
+  background-color: #0000ff; /* Matching blue */
   color: white;
+  width: auto;
+  padding: 16px 32px;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-.join-button .button-text {
+.host-button .button-text, .join-button .button-text {
   font-weight: 600;
-}
-
-@media (max-width: 768px) {
-  .game-title {
-    font-size: 2rem;
-  }
-
-  .game-button {
-    width: 80%;
-  }
 }

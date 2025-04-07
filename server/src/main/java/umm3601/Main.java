@@ -1,3 +1,4 @@
+package umm3601;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;

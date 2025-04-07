@@ -1,3 +1,5 @@
+package umm3601.prompt;
+
 
 import org.mongojack.Id;
 import org.mongojack.ObjectId;

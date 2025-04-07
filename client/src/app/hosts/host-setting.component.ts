@@ -28,7 +28,7 @@ export class HostComponent {
     joincode: new FormControl('', Validators.compose([
       Validators.required,
       Validators.minLength(2),
-      Validators.maxLength(10),
+      Validators.maxLength(50),
     ])),
     playerName: new FormControl('', Validators.compose([
       Validators.required,
@@ -52,7 +52,7 @@ export class HostComponent {
     joincode: [
       {type: 'required', message: 'Join code is required'},
       {type: 'minlength', message: 'Name must be at least 2 characters long'},
-      {type: 'maxlength', message: 'Name cannot be more than 10 characters long'},
+      {type: 'maxlength', message: 'Name cannot be more than 24 characters long'},
     ],
     playerName: [
       {type: 'required', message: 'Player name is required'},
