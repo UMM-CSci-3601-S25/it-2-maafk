@@ -22,28 +22,30 @@ import { GameService } from '../game/game.service';
   templateUrl: './host-setting.component.html',
   styleUrl: './host-setting.component.scss'
 })
-export class HostSettingsComponent {
+export class HostComponent {
 
   addGameForm = new FormGroup({
-    // We allow alphanumeric input and limit the length for name.
     joincode: new FormControl('', Validators.compose([
       Validators.required,
       Validators.minLength(2),
-      // Long join codes are very inconvenient
       Validators.maxLength(10),
     ])),
     playerName: new FormControl('', Validators.compose([
       Validators.required,
       Validators.minLength(2),
-      // length of the player name must be 2-100 characters
       Validators.maxLength(100),
     ])),
     prompt: new FormControl('', Validators.compose([
       Validators.required,
       Validators.minLength(2),
-      // length of the player name must be 2-100 characters
       Validators.maxLength(100),
     ])),
+    // currentRound: new FormControl('', Validators.compose([
+    //   Validators.required,
+    //   Validators.minLength(2),
+    //   Validators.maxLength(100),
+    // ])),
+    
   });
 
   readonly addGameValidationMessages = {
@@ -57,11 +59,16 @@ export class HostSettingsComponent {
       {type: 'minlength', message: 'Name must be at least 2 characters long'},
       {type: 'maxlength', message: 'Name cannot be more than 100 characters long'},
     ],
-    text: [
-      { type: 'required', message: 'Prompt text is required' },
-      { type: 'minlength', message: 'Prompt must be at least 2 characters'},
-      { type: 'maxlength', message: 'Prompt text cannot be more than 200 characters long' }
+    prompt: [
+      {type: 'required', message: 'Prompt is required'},
+      {type: 'minlength', message: 'Prompt must be at least 2 characters long'},
+      {type: 'maxlength', message: 'Prompt cannot be more than 100 characters long'},
     ],
+    // currentRound: [
+    //   {type: 'required', message: 'Prompt is required'},
+    //   {type: 'minlength', message: 'Prompt must be at least 2 characters long'},
+    //   {type: 'maxlength', message: 'Prompt cannot be more than 100 characters long'},
+    // ],
   };
 
   constructor(
@@ -85,7 +92,8 @@ export class HostSettingsComponent {
   }
 
   submitForm() {
-    this.gameService.addGame({joincode: this.addGameForm.value.joincode, players: [`${this.addGameForm.value.playerName}`], currentRound: 0, prompts: [`${this.addGameForm.value.prompt}`]}).subscribe({
+   
+    this.gameService.addGame({joincode: this.addGameForm.value.joincode, players: [`${this.addGameForm.value.playerName}`], prompts: [`${this.addGameForm.value.prompt}`]}).subscribe({
       next: (newId) => {
         this.snackBar.open(
           `Added game with join code: ${this.addGameForm.value.joincode}`,

@@ -1,47 +1,44 @@
-<div class="flex-row">
-  <div class="flex-1">
-    <form [formGroup]="addGameForm" (ngSubmit)="submitForm();">
-      <!-- add slider to determine how many rounds there are -->
-      <mat-card class="host-setting-card">
-        <mat-card-content>
-          <mat-form-field class="input-field">
-            <mat-label>Number Of Rounds</mat-label>
-            <input matInput data-test="NumberRoundInput" type="number" placeholder="Number of Rounds"
-            min="0" max="20">
-          </mat-form-field>
+<form [formGroup]="addGameForm" (ngSubmit)="submitForm();">
+  <mat-card class="add-user-card">
+    <mat-card-header>
+      <mat-card-title class="add-game-title">Host a new game</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="flex-col">
 
-          <mat-form-field>
-            <mat-label for="playerName">Player/Host Name</mat-label>
-            <input matInput type="text"
-              formControlName="playerName" #message placeholder="name of host" required>
-            @if (formControlHasError('playerName')) {
-              <mat-error data-test="playerNameError">
-                {{getErrorMessage('playerName')}}
-              </mat-error>
-            }
-          </mat-form-field>
+        <mat-form-field>
+          <mat-label for="joincode">Join Code</mat-label>
+          <input matInput type="text"
+            formControlName="joincode" required>
+          @if (formControlHasError('joincode')) {
+            <mat-error data-test="joincodeError">
+              {{getErrorMessage('joincode')}}
+            </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="playerName">Player/Host Name</mat-label>
+          <input matInput type="text"
+            formControlName="playerName" required>
+          @if (formControlHasError('playerName')) {
+            <mat-error data-test="playerNameError">
+              {{getErrorMessage('playerName')}}
+            </mat-error>
+          }
+        </mat-form-field>
 
-          <mat-form-field class="example-full-width">
-            <mat-label>Add A Prompt Card</mat-label>
-            <input matInput formControlName="text" #message placeholder="add a new prompt" required>
-            @if (formControlHasError('text')) {
-              <mat-error data-test="textError">
-              {{getErrorMessage('text')}}
-              </mat-error>
-            }
-          </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>First Prompt</mat-label>
+          <textarea matInput formControlName="prompt" rows="3"></textarea>
+          <mat-error *ngIf="formControlHasError('prompt')">
+            {{ getErrorMessage('prompt') }}
+          </mat-error>
+        </mat-form-field>
+        
+      </div>
 
-          <mat-form-field>
-            <mat-label for="joincode">Join Code</mat-label>
-            <input matInput type="text"
-              formControlName="joincode" #message placeholder="create join code" required>
-            @if (formControlHasError('joincode')) {
-              <mat-error data-test="joincodeError">
-                {{getErrorMessage('joincode')}} 
-              </mat-error>
-            }
-          </mat-form-field>
-
+    </mat-card-content>
+    <mat-card-actions align="end">
       <button
         mat-raised-button
         type="button"
@@ -51,14 +48,10 @@
         data-test="confirmJoinAsHostButton"
         >
         JOIN AS HOST
-        </button>
-        </mat-card-content>
-      </mat-card>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
 
-    <!-- button that takes user back to host website -->
 
-    <button mat-fab class="add-user-fab" matTooltip="go back" matTooltipPosition="left" routerLink="/host" style="position: absolute; bottom: 50px; right: 50px;">
-    </button>
-    </form>
-  </div>
-</div>
+
