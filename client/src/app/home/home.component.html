@@ -1,15 +1,77 @@
-<div class="page-container">
-  <div class="background-box">
-    <h1 class="title">HUMANITY AGAINST APPLES</h1>
-    <div class="button-container">
-      <button mat-fab extended color="warn" class="custom-button" [routerLink]="['/host']" routerLinkActive="HostJoinButton">
-        <mat-icon matListItemIcon>menu</mat-icon>
-        Host a game
-      </button>
-      <button mat-fab extended color="primary" class="custom-button" [routerLink]="['/player']" routerLinkActive="PlayerJoinButton">
-        <mat-icon matListItemIcon>videogame_asset</mat-icon>
-        Join a game
-      </button>
-    </div>
+<!-- <div class="flex-row">
+  <div class="flex-1">
+    <mat-card class="home-card game-card">
+      <mat-card-header class="game-card-header">
+        <mat-card-title>
+          <span class="game-title">Game Hub</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="game-card-content">
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            type="button"
+            color="accent"
+            data-test="hostButton"
+            routerLink="/games/new"
+            class="game-button"
+            >
+            <span class="button-text">Host a Game</span>
+          </button>
+        </mat-card-actions>
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            type="button"
+            color="accent"
+            data-test="joinButton"
+            routerLink="/games/join"
+            class="game-button"
+            >
+            <span class="button-text">Join a Game</span>
+          </button>
+        </mat-card-actions>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> -->
+
+<div class="flex-row">
+  <div class="flex-1">
+    <mat-card class="home-card game-card">
+      <mat-card-header class="game-card-header">
+        <mat-card-title>
+          <span class="game-title">Humanity Against Appels</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="game-card-content">
+        <div class="button-container">
+          <mat-card-actions>
+            <button
+              mat-raised-button
+              type="button"
+              color="primary"
+              data-test="hostButton"
+              routerLink="/games/new"
+              class="game-button host-button"
+            >
+              <span class="button-text">Host a Game</span>
+            </button>
+          </mat-card-actions>
+          <mat-card-actions>
+            <button
+              mat-raised-button
+              type="button"
+              color="accent"
+              data-test="joinButton"
+              routerLink="/games/join"
+              class="game-button join-button"
+            >
+              <span class="button-text">Join a Game</span>
+            </button>
+          </mat-card-actions>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
