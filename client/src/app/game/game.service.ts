@@ -17,11 +17,26 @@ export class GameService {
   }
 
   addGame(newGame: Partial<Game>): Observable<string> {
-
     return this.httpClient.post<{id: string}>(this.gameUrl, newGame).pipe(map(response => response.id));
   }
   
   addPlayer(gameId: string, newPlayer: string): Observable<Game> {
     return this.httpClient.put<Game>(`${this.gameUrl}/${gameId}/${newPlayer}`, null);
   }
+
+  addPrompt(gameId: string, newPrompt: string): Observable<Game> {
+    return this.httpClient.put<Game>(`${this.gameUrl}/${gameId}/${newPrompt}`, null);
+  }
+
+  addResponse(gameId: string, playerName: string, responseText: string): Observable<Game> {
+  return this.httpClient.put<Game>(`${this.gameUrl}/${gameId}/responses`, {
+    player: playerName,
+    text: responseText
+  });
+  }
+
+ getResponses(gameId: string): Observable<string[]> {
+  return this.httpClient.get<string[]>(`${this.gameUrl}/${gameId}/responses`);
 }
+}
+
