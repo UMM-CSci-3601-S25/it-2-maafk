@@ -3,7 +3,6 @@
     <mat-toolbar>Client</mat-toolbar>
     <mat-nav-list class="sidenav-list" role="navigation">
 
-      <!-- Side navigation links -->
 
       <a mat-list-item routerLink="/" routerLinkActive="drawer-list-item-active"
         #routerLinkActiveInstance="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" (click)="drawer.close()">
@@ -11,14 +10,14 @@
         Home
       </a>
 
-      <a mat-list-item routerLink="/users" routerLinkActive="drawer-list-item-active" (click)="drawer.close()">
-        <mat-icon matListItemIcon>people</mat-icon>
-        Users
+      <a mat-list-item routerLink="/host" routerLinkActive="drawer-list-item-active" (click)="drawer.close()">
+        <mat-icon matListItemIcon>menu</mat-icon>
+        Host
       </a>
 
-      <a mat-list-item routerLink="/companies" routerLinkActive="drawer-list-item-active" (click)="drawer.close()">
-        <mat-icon matListItemIcon>business</mat-icon>
-        Companies
+      <a mat-list-item routerLink="/game" routerLinkActive="drawer-list-item-active" (click)="drawer.close()">
+        <mat-icon matListItemIcon>videogame_asset</mat-icon>
+        randomString
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -28,7 +27,9 @@
         class="sidenav-button">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
+
       <span class="app-title">{{title}}</span>
+
     </mat-toolbar>
     <div class="main-content mat-typography">
       <router-outlet></router-outlet>
