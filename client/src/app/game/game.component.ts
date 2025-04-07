@@ -165,11 +165,11 @@ export class GameComponent implements OnInit {
     this.players.forEach((player, index) => {
       player.isCzar = index === (this.players.findIndex(p => p.isCzar) + 1 % this.players.length);
     });
-    this.isCzar = this.players.some(p => p.isCzar && p.name === 'You');
+    this.isCzar = this.currentPlayerName === this.currentCzar;
   }
 
   private checkIfCzar(playerName: string): boolean {
-    // Implement your czar selection logic here
+    
     return false; // Temporary placeholder
   }
 }

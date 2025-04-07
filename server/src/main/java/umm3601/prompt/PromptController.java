@@ -37,7 +37,7 @@ public class PromptController implements Controller {
       .get();
 
     promptCollection.insertOne(newPrompt);
-    ctx.json(Map.of("id", newPrompt._id));
+    ctx.json(Map.of("id", newPrompt._id));  
     ctx.status(HttpStatus.CREATED);
   }
 

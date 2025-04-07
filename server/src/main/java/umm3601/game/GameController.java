@@ -155,6 +155,7 @@ public void getResponses(Context ctx) {
   ctx.status(HttpStatus.OK);
 }
 
+
   @Override    
   public void addRoutes(Javalin server) {
     server.get(API_GAME_BY_ID, this::getGame);
