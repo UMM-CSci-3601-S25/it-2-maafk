@@ -13,5 +13,5 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   imports: [MatSidenavModule, MatToolbarModule, MatListModule, RouterLink, RouterLinkActive, MatIconModule, MatButtonModule, RouterOutlet]
 })
 export class AppComponent {
-  title = 'humanity against apples';
+  title = 'humanity against appels';
 }
