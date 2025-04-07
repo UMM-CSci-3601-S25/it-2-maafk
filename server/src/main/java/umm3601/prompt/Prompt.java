@@ -3,11 +3,8 @@ package umm3601.prompt;
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
-
-
 @SuppressWarnings({"VisibilityModifier"})
 public class Prompt {
-
   @ObjectId @Id
   @SuppressWarnings({"MemberName"})
   public String _id;
@@ -32,5 +29,4 @@ public class Prompt {
   public String toString() {
     return text;
   }
-
 }
