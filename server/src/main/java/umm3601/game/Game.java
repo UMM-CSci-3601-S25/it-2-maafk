@@ -5,14 +5,15 @@ import org.mongojack.ObjectId;
 
 @SuppressWarnings({"VisibilityModifier"})
 public class Game {
-
   @ObjectId @Id
   @SuppressWarnings({"MemberName"})
   public String _id;
 
   public String joincode;
   public String[] players;
-
+  public String[] prompts;  
+  public String[] responses;
+  public int currentRound;  
 
   @Override
   public boolean equals(Object obj) {
@@ -30,6 +31,8 @@ public class Game {
 
   @Override
   public String toString() {
-    return "A game with joincode: " + joincode + ", and " + players.length + " players.";
+    return "A game with joincode: " + joincode + 
+           ", " + players.length + " players, " + 
+           prompts.length + " prompts, and round " + currentRound;
   }
 }
